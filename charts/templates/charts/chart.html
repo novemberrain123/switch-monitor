@@ -1,0 +1,77 @@
+{% extends "charts/base.html" %}
+{% load static %}
+{% block style %}
+{% endblock style %}
+{% block title %}
+  <h1>Switch Availability Charts</h1>
+{% endblock title %}
+{% block content %}
+  <form id="datepick" method="get">
+    <input id="dateinput"
+           type="date"
+           name="date"
+           min="{{ min_date }}"
+           max="{{ max_date }}">
+    <input type="radio" id="12" name="hours" value=12 checked="checked">
+    <label for="12">00:00-11:59</label>
+    <input type="radio" id="24" name="hours" value=24>
+    <label for="24">12:00-23:59</label>
+    <input type="submit">
+  </form>
+  <div id="chartArea"
+       class="chartAreaWrapper"
+       style="width:80%;
+              height:170px"></div>
+{% endblock content %}
+{% block script %}
+  <script>
+        function generateChart(data){
+                $("#chartArea").empty();
+              for(let i=0;i < Object.keys(data).length / 2; i++){
+                var canvasObj = $("<canvas width=\"1\" id=\"canvas" + i + "\"></canvas>");
+                $("#chartArea").append(canvasObj);
+                var ctx = $("#canvas" + i)[0].getContext("2d");
+                new Chart(ctx,{
+                type:'line',
+                data:{
+                  labels: data["labelS" + (i+1)],
+                  datasets:[{
+                    label: "S" + (i+1),
+                    data: data["dataS" + (i+1)],
+                  }]
+                },
+                options:{
+                  scales: {
+                    y: {
+                      ticks: {
+                        callback: function(value) {
+                          if(value == 0 || value == 1){
+                            return value;
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+            }
+                      
+            )
+              }
+            }
+
+        $(document).ready(function() {
+            $("#datepick").on('submit', function (e){
+            e.preventDefault();
+            if(!($("#dateinput").val())){
+              alert("Enter date value!");
+              return 0;
+            }
+            var datastring = $("#datepick").serialize();
+            $.get('getdata/', 
+                   { data: datastring},
+                   function(data) {generateChart(data);}
+                );
+            });
+        });
+  </script>
+{% endblock script %}

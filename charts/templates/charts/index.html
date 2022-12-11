@@ -1,0 +1,34 @@
+{% extends "charts/base.html" %}
+{% load static %}
+{% block style %}
+button {
+    width: 30vw;
+    margin-bottom: 10px;
+}
+{% endblock style %}
+{% block back %}{% endblock back %}
+{% block content %}
+        <form id="calcStatus" method="post">
+            {% csrf_token %}
+            <button type="submit">Calculate Switch Status</button>
+        </form>
+        <form action="chart" method="get">
+            <button>View Ping Availability Charts</button>
+        </form>
+        <form action="alert" method="get">
+            <button>View Alert Report</button>
+        </form>
+{% endblock content %}
+{% block script %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#calcStatus").on('submit', function (e){
+            e.preventDefault();
+            $.post('calc/', 
+                    {csrfmiddlewaretoken: '{{ csrf_token }}'},
+                    function(response){alert(response.msg);}
+                );
+            });
+        });
+    </script>
+{% endblock script %}

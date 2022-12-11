@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <style>
+            body {font-family: Helvetica, Roboto, Georgia}
+            {% block style %}
+            {% endblock style %}
+        </style>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Switch Monitor</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    </head>
+    <body>
+        {% block back %}
+        <a href="/charts/" style="position: absolute;">
+            <p>< Back</p>
+        </a>
+        {% endblock back %}
+    <div id="dialog" style="display:flex;justify-content:center;flex-direction:column;align-items:center">
+        {% block title %}
+            <h1>Switch Monitor</h1>
+        {% endblock title %}
+        {% block content %}
+        {% endblock content %}
+    </div>
+        <p style="position: absolute; bottom: 0" >made by Lim Hang Shen</p>
+        {% block script %}
+            <script src="" async defer></script>
+        {% endblock script %}
+    </body>
+</html>

@@ -1,0 +1,60 @@
+{% extends "charts/base.html" %}
+{% load static %}
+{% block title %}<h1>Alert Report</h1>{% endblock title %}
+{% block style %}
+table {
+  counter-reset: rowNumber;
+}
+
+table tr:not(:first-child)::before {
+  display: table-cell;
+  counter-increment: rowNumber;
+  content: counter(rowNumber);
+  padding-left: 0.3em;
+  padding-top: 0.5em;
+  text-align: left;
+}
+
+#alerts {
+  display: block;
+  height: 40vw;
+  overflow-y: scroll;
+  border-collapse: collapse;
+}
+
+#alerts td, #alerts th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#alerts tr:nth-child(even){background-color: #f2f2f2;}
+
+#alerts tr:hover {background-color: #ddd;}
+
+#alerts th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
+{% endblock style %}
+{% block content %}
+    <div style="display: block; overflow-y:auto">
+    <table id="alerts">
+        <tr>
+            <th>No</th>
+            <th>Switch</th>
+            <th>Alert Type</th>
+            <th>Alert Date/Time</th>
+        </tr>
+        {% for data in table %}
+        <tr>
+            <td>{{data.switch_label}}</td>
+            <td>Ping Lost</td>
+            <td>{{data.ts}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock content %}
